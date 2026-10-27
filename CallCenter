@@ -1,0 +1,83 @@
+package callcenter;
+import java.util.LinkedList;
+
+public class CallCenter {
+
+    private Cola <Llamada> cola;
+    private double tiempoTotal;
+    private LinkedList<Integer> puntuaciones;
+
+    public CallCenter() {
+        cola = new Cola();
+        tiempoTotal = 0;
+        puntuaciones = new LinkedList<>();
+    }
+
+    public void recibirLlamada(Llamada llamada) {
+        if (llamada.getTipo() == Llamada.Tipo.Prioritaria) {
+            cola.enqueue(llamada);
+        } else {
+            cola.enqueue(llamada);
+        }
+    }
+
+    public Llamada atenderLlamada() {
+        Llamada llamada = cola.dequeue();
+        tiempoTotal += llamada.getDuracion();
+        puntuaciones.add(llamada.obtenerPuntuacion());
+        return llamada;
+    }
+
+    public void cancelarLlamada() {
+        cola.dequeue(); 
+    }
+
+    public void mostrarCola() {
+        if (cola.empty()) {
+            System.out.println("no hay llamadas pendientes.");
+            return;
+        }
+        System.out.println("llamadas pendientes");
+        for (Llamada l : cola) {
+            System.out.println("cliente: " + l.getCliente() + " duracion:  " + l.getDuracion() + " min");
+        }
+    }
+
+    public double tiempoTotalPendiente() {
+        double suma = 0;
+        for (Llamada l : cola) {
+            suma += l.getDuracion();
+        }
+        return suma;
+    }
+
+    public int llamadasPendientes() {
+        return cola.size();
+    }
+
+    public void atenderTodas() {
+        while (!cola.empty()) {
+            Llamada l = atenderLlamada();
+            int puntuacion = puntuaciones.getLast();
+            System.out.println("Atendido: " + l.getCliente()
+                    + "  duracion: " + l.getDuracion() + " min"
+                    + "  puntuacion: " + puntuacion);
+        }
+    }
+
+    
+    public double obtenerPromedio() {
+        if (puntuaciones.isEmpty()) {
+            return 0;
+        }
+        int suma = 0;
+        for (int p : puntuaciones) {
+            suma += p;
+        }
+        return (double) suma / puntuaciones.size();
+    }
+
+    public double getTiempoTotal() {
+        return tiempoTotal;
+    }
+}
