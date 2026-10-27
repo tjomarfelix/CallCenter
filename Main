@@ -1,0 +1,46 @@
+package callcenter;
+
+/**
+ *
+ * @author jomar
+ */
+public class Main {
+
+ 
+    public static void main(String[] args) {
+        CallCenter centro = new CallCenter();
+        
+        centro.recibirLlamada(new Llamada(1, "Paula", Llamada.Tipo.Normal, 5.0));
+        centro.recibirLlamada(new Llamada(2, "Juan", Llamada.Tipo.Normal, 3.5));
+        centro.recibirLlamada(new Llamada(3, "Omar", Llamada.Tipo.Prioritaria, 2.0));
+        centro.recibirLlamada(new Llamada(4, "Mbappe", Llamada.Tipo.Normal, 7.25));
+        centro.recibirLlamada(new Llamada(5, "Sofia", Llamada.Tipo.Prioritaria, 4.0));
+        
+        
+        
+        centro.mostrarCola();
+        System.out.println("Pendientes: " + centro.llamadasPendientes());
+        System.out.println("Tiempo pendiente: " + centro.tiempoTotalPendiente()+ "min");
+        
+        
+        System.out.println("Atendiendo una Llamada");
+        Llamada atendida = centro.atenderLlamada();
+        System.out.println("Atendida: " + atendida);
+        System.out.println("Tiempo total atendido: " + centro.getTiempoTotal() + "min");
+        
+        System.out.println(" Cancelando una llamada ");
+        centro.cancelarLlamada();
+        System.out.println("Tiempo total atendido (sin cambios): " + centro.getTiempoTotal() + " min");
+        centro.mostrarCola(); 
+        
+        System.out.println("Atendiendo todas");
+        centro.atenderTodas();
+        
+        System.out.println("Resumen");
+        System.out.println("Tiempo total: " + centro.getTiempoTotal() + " min");
+        System.out.println("Promedio de puntuacion: " + centro.obtenerPromedio());
+        System.out.println("Pendientes: " + centro.llamadasPendientes());
+    }
+    
+    
+}
